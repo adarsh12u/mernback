@@ -17,7 +17,10 @@ console.log(path.join(__dirname ))
 //      res.sendFile(path.join(__dirname , './client/app/build/index.html' ))
 // })
 // middlew
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000", // Replace with your frontend's URL
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+}));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
