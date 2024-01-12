@@ -18,14 +18,20 @@ console.log(path.join(__dirname ))
 // })
 // middlew
 const corsOptions = {
-    origin: '*',
+    origin: "http://localhost:3000",
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204
   };
   
-  app.use(cors(corsOptions));
+  app.use(cors({
+    origin: "http://localhost:3000",
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+  }));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -33,7 +39,16 @@ app.use(express.urlencoded({extended:true}))
 app.use('/api',Routes)
 
 
-
+app.get('/',(req,res) =>{
+      res.json({
+        hello:"guys"
+      })
+})
+app.get('/login',(req,res) =>{
+    res.json({
+      hello:"guys login"
+    })
+})
 
 // create server
 
