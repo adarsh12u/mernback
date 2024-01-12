@@ -8,11 +8,12 @@ const jwt = require('jsonwebtoken')
 
 const login_Hr  = async(req,res) =>{
  
-const {login}  =req.body;
+const login  =req.body;
 const email = login.HR_email
 const password = login.HR_password
 // const email = req.body.HR_email
 // const password = req.body.HR_password
+console.log(email)
 try {
 
     if(!email || !password)
@@ -26,19 +27,28 @@ try {
    if(!HR_data){
     throw new Error("not registerd")
    }
+   
+  
    if(HR_data){
-const passwordMatch =   await bycryptjs.compare(password,HR_data.HR_password)
+// const passwordMatch =   await bycryptjs.compare(password,HR_data.HR_password)
+ const passwordMatch =   password == HR_data.HR_password
+
+console.log(passwordMatch)
   if(passwordMatch){
-          // create token
+          
+    // create token
           const tokendata =await HR_data.generateAuthToken()
         
+    
 
+          
          await res.cookie("jwt",tokendata,{
 
             expires:new Date(Date.now()+2592000000),
             httpOnly : true
           })
  
+          
           // window.localStorage.setItem("loggedIn", true);
           const HR_content = {
   

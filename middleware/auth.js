@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-
+const SECRETE_KEY = require('../config/key')
 const user = require("../models/HR")
 
 const auth = async(req,res,next) =>{
@@ -8,7 +8,7 @@ const auth = async(req,res,next) =>{
      
         const token = req.headers.authorization;
        
-        const verifytoken = jwt.verify(token , process.env.SECRETE_KEY)
+        const verifytoken = jwt.verify(token ,SECRETE_KEY.secret_jwt_key)
       
 
         

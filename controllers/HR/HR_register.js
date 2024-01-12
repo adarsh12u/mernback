@@ -14,22 +14,25 @@ const securepassword = async (HR_password) => {
     const hash_password = await bcryptjs.hash(HR_password, 10);
     return hash_password;
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    
   }
 };
 
 
 const securecpassword = async (HR_Confirmpassword) => {
+  
   try {
     const hash_password = await bcryptjs.hash(HR_Confirmpassword, 10);
+    console.log(hash_password)
     return hash_password;
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    
   }
 };
 
 const register_Hr = async (req, res) => {
-const{signup} = req.body
+const signup = req.body
+
     try {
      if (!(signup.HR_Confirmpassword === signup.HR_password)) 
         {
@@ -37,25 +40,29 @@ const{signup} = req.body
         }
     const Secure_password = await securepassword(signup.HR_password);
     const Secure_cpassword = await securecpassword(signup.HR_Confirmpassword);
+    console.log(Secure_cpassword)
+    console.log(Secure_password)
     const HR_REGISTER_DATA = new model({
       HR_Firstname: signup.HR_Firstname,
       HR_Lastname: signup.HR_Lastname,
       HR_email: signup.HR_email,
-      HR_password: Secure_password,
-      HR_Confirmpassword: Secure_cpassword,
+      HR_password: signup.HR_password,
+      HR_Confirmpassword: signup.HR_Confirmpassword,
       mobile: signup.mobile,
      
     });
     
-    
-  
+    console.log(HR_REGISTER_DATA)
+  console.log("!")
 
     const hr_data = await model.findOne({ HR_email: signup.HR_email });
     if (hr_data) 
     
     {
+      console.log("!")
       res.status(200).send({ sucess: false, msg: "this mail is already have" });
     
+  console.log("!")
     }
     
     else
